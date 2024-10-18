@@ -7,18 +7,18 @@
 <script>
     Highcharts.chart('container', {
         title: {
-            text: 'نممودار فروش 30 روز گذشته',
+            text: 'Sales Chart for the Last 30 Days',
             align: 'center'
         },
         tooltip: {
             useHTML: true,
             style: {
-                fontSize: "20 px",
-                fontFamily: 'tahoma',
+                fontSize: "20px",
+                fontFamily: 'Tahoma',
                 direction: "rtl"
             },
             formatter: function () {
-                return (this.x ? "تاریخ: " + this.x + "<br>" : "") + "مبلغ: " + this.y
+                return (this.x ? "Date: " + this.x + "<br>" : "") + "Amount: " + this.y;
             }
         },
         xAxis: {
@@ -26,17 +26,17 @@
         },
         yAxis: {
             title: {
-                text: 'مبلغ'
+                text: 'Amount'
             },
             labels: {
                 formatter: function () {
-                    return this.value + " تومان"
+                    return this.value + " Toman";
                 }
             },
         },
         labels: {
             items: [{
-                html: 'درآمد 30 روز گذشته',
+                html: 'Income for the Last 30 Days',
                 style: {
                     left: '50px',
                     top: '18px',
@@ -49,21 +49,21 @@
         },
         series: [{
             type: 'column',
-            name: 'درصد سایت',
+            name: 'Site Percentage',
             color: "green",
             data: [@foreach($dates as $date => $value) @if($day = $summery->where("date",  $date)->first()) {{ $day->totalSiteShare }}, @else 0, @endif  @endforeach]
         }, {
             type: 'column',
-            name: 'تراکنش موفق',
+            name: 'Successful Transactions',
             data: [@foreach($dates as $date => $value) @if($day = $summery->where("date",  $date)->first()) {{ $day->totalAmount }}, @else 0, @endif  @endforeach]
         }, {
             type: 'column',
-            name: 'درصد مدرس',
+            name: 'Instructor Percentage',
             color: "pink",
             data: [@foreach($dates as $date => $value) @if($day = $summery->where("date",  $date)->first()) {{ $day->totalSellerShare}}, @else 0, @endif  @endforeach]
         }, {
             type: 'spline',
-            name: 'فروش',
+            name: 'Sales',
             data: [@foreach($dates as $date => $value) @if($day = $summery->where("date",  $date)->first()) {{ $day->totalAmount }}, @else 0, @endif  @endforeach],
             marker: {
                 lineWidth: 2,
@@ -73,13 +73,13 @@
             color: "green"
         }, {
             type: 'pie',
-            name: 'نسبت',
+            name: 'Ratio',
             data: [{
-                name: 'درصد سایت',
+                name: 'Site Percentage',
                 y: {{$last30DaysBenefit}},
                 color: "green"
             }, {
-                name: 'درصد مدرس',
+                name: 'Instructor Percentage',
                 y: {{$last30DaysSellerShare}},
                 color: "pink"
             }],
@@ -91,5 +91,4 @@
             }
         }]
     });
-
 </script>
