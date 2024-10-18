@@ -1,27 +1,27 @@
 @extends('Dashboard::master')
 @section('breadcrumb')
-    <li><a href="{{route('settlements.index')}}" title="Settlements">Settlements</a></li>
+    <li><a href="{{route('settlements.index')}}" title="تسویه حساب ها">تسویه حساب ها</a></li>
 @endsection
 @section('content')
     <div class="tab__box">
         <div class="tab__items">
-            <a class="tab__item is-active" href="{{route('settlements.index')}}"> All Settlements</a>
-            <a class="tab__item " href="?status=settled">Settled Transfers</a>
-            <a class="tab__item " href="{{route('settlements.create')}}">Request New Settlement</a>
+            <a class="tab__item is-active" href="{{route('settlements.index')}}"> همه تسویه ها</a>
+            <a class="tab__item " href="?status=settled">تسویه های واریز شده</a>
+            <a class="tab__item " href="{{route('settlements.create')}}">درخواست تسویه جدید</a>
         </div>
     </div>
     <div class="bg-white padding-20">
         <div class="t-header-search">
             <form action="" onclick="event.preventDefault();">
                 <div class="t-header-searchbox font-size-13">
-                    <div type="text" class="text search-input__box ">Search Period</div>
+                    <div type="text" class="text search-input__box ">جستجوی دوره</div>
                     <div class="t-header-search-content ">
-                        <input type="text" class="text" placeholder="Card Number">
-                        <input type="text" class="text" placeholder="ID">
-                        <input type="text" class="text" placeholder="Date">
-                        <input type="text" class="text" placeholder="Email">
-                        <input type="text" class="text margin-bottom-20" placeholder="Full Name">
-                        <button class="btn btn-brand">Search</button>
+                        <input type="text" class="text" placeholder="شماره کارت">
+                        <input type="text" class="text" placeholder="شماره">
+                        <input type="text" class="text" placeholder="تاریخ">
+                        <input type="text" class="text" placeholder="ایمیل">
+                        <input type="text" class="text margin-bottom-20" placeholder="نام و نام خانوادگی">
+                        <btutton class="btn btn-brand">جستجو</btutton>
                     </div>
                 </div>
             </form>
@@ -32,17 +32,17 @@
         <table class="table">
             <thead role="rowgroup">
             <tr role="row" class="title-row">
-                <th>Settlement ID</th>
-                <th>User</th>
-                <th>From</th>
-                <th>To</th>
-                <th>Destination Card Number</th>
-                <th>Request Date</th>
-                <th>Settlement Date</th>
-                <th>Amount (ETB)</th>
-                <th>Status</th>
+                <th>شناسه تسویه</th>
+                <th>کاربر</th>
+                <th>مبدا</th>
+                <th>مقصد</th>
+                <th>شماره کارت مقصد</th>
+                <th>تاریخ درخواست واریز</th>
+                <th>تاریخ واریز شده</th>
+                <th>مبلغ (تومان )</th>
+                <th>وضعیت</th>
                 @can(\Abd\RolePermissions\Models\Permission::PERMISSION_MANAGE_SETTLEMENTS)
-                <th>Actions</th>
+                <th>عملیات</th>
                 @endcan
             </tr>
             </thead>
@@ -61,7 +61,7 @@
                     @can(\Abd\RolePermissions\Models\Permission::PERMISSION_MANAGE_SETTLEMENTS)
                         <td>
                             <a href="{{route('settlements.edit', $settlement->id)}}" class="item-edit "
-                               title="Edit"></a>
+                               title="ویرایش"></a>
                         </td>
                     @endcan
                 </tr>

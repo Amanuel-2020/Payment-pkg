@@ -7,22 +7,18 @@
 <script>
     Highcharts.chart('container', {
         title: {
-            text: 'Sales Chart for the Last 30 Days',
+            text: 'نممودار فروش 30 روز گذشته',
             align: 'center'
         },
         tooltip: {
             useHTML: true,
             style: {
-                fontSize: "20px",
-                fontFamily: 'Tahoma',
+                fontSize: "20 px",
+                fontFamily: 'tahoma',
                 direction: "rtl"
             },
             formatter: function () {
-                return `
-                    <strong>${this.series.name}</strong><br/>
-                    Date: ${this.x}<br/>
-                    Amount: ${Highcharts.numberFormat(this.y, 0)} ETB
-                `;
+                return (this.x ? "تاریخ: " + this.x + "<br>" : "") + "مبلغ: " + this.y
             }
         },
         xAxis: {
@@ -30,43 +26,45 @@
         },
         yAxis: {
             title: {
-                text: 'Amount'
+                text: 'مبلغ'
             },
             labels: {
                 formatter: function () {
-                    return this.value + " ETB";
+                    return this.value + " تومان"
                 }
             },
         },
         labels: {
             items: [{
-                html: 'Income for the Last 30 Days',
+                html: 'درآمد 30 روز گذشته',
                 style: {
                     left: '50px',
                     top: '18px',
-                    color: (Highcharts.defaultOptions.title.style &&
-                            Highcharts.defaultOptions.title.style.color) || 'black'
+                    color: ( // theme
+                        Highcharts.defaultOptions.title.style &&
+                        Highcharts.defaultOptions.title.style.color
+                    ) || 'black'
                 }
             }]
         },
         series: [{
             type: 'column',
-            name: 'Site Share',
+            name: 'درصد سایت',
             color: "green",
-            data: [@foreach($dates as $date => $value) @if($day = $summary->where("date",  $date)->first()) {{ $day->totalSiteShare }}, @else 0, @endif  @endforeach]
+            data: [@foreach($dates as $date => $value) @if($day = $summery->where("date",  $date)->first()) {{ $day->totalSiteShare }}, @else 0, @endif  @endforeach]
         }, {
             type: 'column',
-            name: 'Successful Transactions',
-            data: [@foreach($dates as $date => $value) @if($day = $summary->where("date",  $date)->first()) {{ $day->totalAmount }}, @else 0, @endif  @endforeach]
+            name: 'تراکنش موفق',
+            data: [@foreach($dates as $date => $value) @if($day = $summery->where("date",  $date)->first()) {{ $day->totalAmount }}, @else 0, @endif  @endforeach]
         }, {
             type: 'column',
-            name: 'Seller Share',
+            name: 'درصد مدرس',
             color: "pink",
-            data: [@foreach($dates as $date => $value) @if($day = $summary->where("date",  $date)->first()) {{ $day->totalSellerShare}}, @else 0, @endif  @endforeach]
+            data: [@foreach($dates as $date => $value) @if($day = $summery->where("date",  $date)->first()) {{ $day->totalSellerShare}}, @else 0, @endif  @endforeach]
         }, {
             type: 'spline',
-            name: 'Sales',
-            data: [@foreach($dates as $date => $value) @if($day = $summary->where("date",  $date)->first()) {{ $day->totalAmount }}, @else 0, @endif  @endforeach],
+            name: 'فروش',
+            data: [@foreach($dates as $date => $value) @if($day = $summery->where("date",  $date)->first()) {{ $day->totalAmount }}, @else 0, @endif  @endforeach],
             marker: {
                 lineWidth: 2,
                 lineColor: "green",
@@ -75,13 +73,13 @@
             color: "green"
         }, {
             type: 'pie',
-            name: 'Ratio',
+            name: 'نسبت',
             data: [{
-                name: 'Site Share',
+                name: 'درصد سایت',
                 y: {{$last30DaysBenefit}},
                 color: "green"
             }, {
-                name: 'Seller Share',
+                name: 'درصد مدرس',
                 y: {{$last30DaysSellerShare}},
                 color: "pink"
             }],
@@ -93,4 +91,5 @@
             }
         }]
     });
+
 </script>

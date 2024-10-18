@@ -30,11 +30,10 @@ class SettlementService
 
         if (in_array($settlement->status, [Settlement::STATUS_CANCELLED, Settlement::STATUS_REJECTED]) &&
             in_array($data["status"], [Settlement::STATUS_SETTLED, Settlement::STATUS_PENDING])) {
-                if ($settlement->user->balance < $data['amount']) {
-                    newFeedback("Unsuccessful", "User's account balance is insufficient.", "error");
-                    return;
-                }
-                
+            if ($settlement->user->balance < $data['amount']) {
+                newFeedback("ناموفق", "موجودی حساب کاربر، کافی نمی باشد.", "error");
+                return;
+            }
             $settlement->user->balance -= $settlement->amount;
             $settlement->user->save();
         }
